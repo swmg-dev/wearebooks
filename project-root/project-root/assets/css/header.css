@@ -1,0 +1,303 @@
+ :root {
+     --blue: #9ed2ee;
+     --text: #111;
+     --muted: #666;
+     --border: #e6e6e6;
+     --header-h: 110px;
+     --shadow: 0 12px 30px rgba(0, 0, 0, .12);
+     --radius: 10px;
+      --footer-h: 120px;
+ }
+
+html, body{
+     height: 100%;
+}
+
+.site-footer {
+  height: var(--footer-h);
+}
+
+
+ * {
+     box-sizing: border-box;
+ }
+
+ body {
+     margin: 0;
+     font-family: "ChnDefault", "HanwhaGothic", sans-serif;
+     color: var(--text);
+     background: #fff;
+         min-height: 100vh;
+ }
+/* ================= HEADER ================= */
+
+/* 헤더 전체 */
+header.site-header {
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  padding: 0 18px;
+  border-bottom: 1px solid var(--border);
+  gap: 12px;
+
+}
+
+/* 로고 영역 */
+.logo {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  margin-left: 5px;
+}
+
+.logo img {
+  height: 40px;
+  width: auto;
+  display: block;
+  margin-left: 15px;
+  
+}
+
+/* 네비게이션 감싸는 영역 (스크롤 담당) */
+.nav-wrap {
+  flex: 0 0 auto;
+  overflow-x: auto;
+  overflow-y: hidden;
+  
+}
+
+/* nav-wrap 스크롤바 스타일 */
+.nav-wrap::-webkit-scrollbar {
+  height: 6px;
+}
+
+.nav-wrap::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 999px;
+}
+
+/* 네비게이션 바 */
+nav.nav-bar {
+  flex: 0 0 auto;
+  width: 820px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 28px;
+  white-space: nowrap;
+  
+}
+
+/* 네비게이션 링크 */
+.nav-link {
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 600;
+  color: #000;
+  padding: 12px 15px;
+  border-radius: 8px;
+  white-space: nowrap;
+  
+}
+
+.nav-link:hover {
+  color: #de9961;
+  background-color: #f3f4f6;
+}
+
+/* 오른쪽 아이콘 영역 */
+.right-icons {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 120px;
+}
+
+/* 아이콘 버튼 */
+.icon-link {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  color: #111;
+  text-decoration: none;
+}
+
+.icon-link:hover {
+  background: #f3f4f6;
+}
+
+/* SVG 아이콘 크기 */
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* ================= HEADER (모바일 보정) ================= */
+@media (max-width: 840px) {
+  .logo {
+    margin-left: 0;
+  }
+}
+
+.page-layout {
+    display: flex;
+    width: 100%;
+    padding: 25px 0;
+    background-color: #f3f3f3;
+}
+
+.is-hidden { display: none !important; }
+
+.right-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.login-text-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 8px;
+  margin-right: 15px;
+}
+
+/* 모달 */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+}
+
+.modal__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.modal__content {
+  position: relative;
+  width: min(520px, 92vw);
+  height: min(840px, 86vh);
+  margin: 6vh auto 0;
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid #eee;
+  height: 60px;
+}
+
+.modal__close {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.modal__iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+#loginModalTitle{
+    font-size: 18px;
+}
+
+.user-menu{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.user-hello{
+  font-size:14px;
+  width: 110px;
+  text-align: right;
+}
+
+.logout-btn{
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 6px 8px;
+  width: 70px;
+}
+
+.logout-btn:hover{
+  text-decoration: underline;
+}
+
+/* ✅ 로그인 모달 전용: myPage의 .modal(배송조회)와 충돌 방지 */
+.auth-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-modal.is-hidden { display: none !important; }
+
+.auth-modal__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+}
+
+.auth-modal__content {
+  position: relative;
+  width: min(900px, 92vw);
+  height: min(720px, 90vh);
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.auth-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.auth-modal__close {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.auth-modal__iframe {
+  width: 100%;
+  height: calc(100% - 49px);
+  border: 0;
+}
+
+
+.loginModal{
+  height: 100%;
+}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>더조은무비 - 회원가입</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+  <!-- ✅ 디자인 동일하게: login.css 재사용 -->
+  <link href="login.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+
+  <style>
+    /* 로그인과 같은 레이아웃 유지 + 상단 제목만 변경 */
+    body.in-modal .header {
+      display: block;
+    }
+
+    /* 회원가입 폼은 항목이 많아서 높이만 조금 여유 */
+    .loginUI {
+      height: auto;
+    }
+
+    .helper {
+      font-size: 12px;
+      color: #666;
+      margin: 6px 0 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <header class="header" role="banner">
+      <div class="headerinner">
+        <img class="logo" src="../../assets/imgs/login/thejoeun_garo.png" alt="로고" style="width: 300px;">
+      </div>
+    </header>
+  </div>
+
+  <div class="loginUI">
+    <h2 style="font-size:24px; color:#310168; margin-bottom: 16px;">회원가입</h2>
+
+    <form id="signupForm">
+      <!-- 아이디 -->
+      <div class="form-floating mb-2">
+        <input type="text" class="form-control" id="signupId" placeholder="Id" autocomplete="username">
+        <label for="signupId">아이디 (8~12자, 영문+숫자 조합)</label>
+      </div>
+      <div id="idError" class="error-message" style="display:none;"></div>
+
+      <!-- 비밀번호 -->
+      <div class="form-floating mb-2">
+        <input type="password" class="form-control" id="signupPw" placeholder="Password" autocomplete="new-password">
+        <label for="signupPw">비밀번호 (8~12자, 영문+숫자+특수문자)</label>
+      </div>
+      <div id="pwError" class="error-message" style="display:none;"></div>
+
+      <!-- 비밀번호 확인 -->
+      <div class="form-floating mb-2">
+        <input type="password" class="form-control" id="signupPw2" placeholder="Password Confirm" autocomplete="new-password">
+        <label for="signupPw2">비밀번호 확인</label>
+      </div>
+      <div id="pw2Error" class="error-message" style="display:none;"></div>
+
+      <!-- 이름 -->
+      <div class="form-floating mb-2">
+        <input type="text" class="form-control" id="signupName" placeholder="Name" autocomplete="name">
+        <label for="signupName">이름</label>
+      </div>
+      <div id="nameError" class="error-message" style="display:none;"></div>
+
+      <!-- 주소 -->
+      <div class="form-floating mb-2">
+        <input type="text" class="form-control" id="signupAddr1" placeholder="Address" autocomplete="address-line1">
+        <label for="signupAddr1">주소</label>
+      </div>
+      <div class="form-floating mb-2">
+        <input type="text" class="form-control" id="signupAddr2" placeholder="Detail Address" autocomplete="address-line2">
+        <label for="signupAddr2">상세주소</label>
+      </div>
+      <div id="addrError" class="error-message" style="display:none;"></div>
+
+      <div class="helper">
+        ※ 회원가입 완료 시 로그인 화면으로 돌아갑니다.
+      </div>
+
+      <button class="button" type="submit">회원가입 완료</button>
+
+      <ul class="find_wrap" style="margin-top:10px;">
+        <li><a href="login.html" onclick="return goLogin()">로그인으로 돌아가기</a></li>
+      </ul>
+    </form>
+  </div>
+
+  <script>
+    // iframe(모달) 여부 표시
+    if (window.parent && window.parent !== window) {
+      document.body.classList.add("in-modal");
+    }
+
+    function goLogin() {
+      location.href = "login.html";
+      return false;
+    }
+  </script>
+
+  <!-- ✅ 회원가입 로직 -->
+  <script src="../../assets/js/signup.js"></script>
+</body>
+
+</html>

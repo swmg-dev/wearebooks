@@ -1,0 +1,62 @@
+:root{
+    --header-h: 64px; 
+    --footer-h: 120px;
+}
+
+body{
+    min-height: 100vh;
+}
+
+html, body{
+     height: 100%;
+ }
+
+
+#site-main {
+  flex: 1;
+  display: flex;
+}
+
+.site-footer {
+  height: var(--footer-h);
+}
+
+.bookImg {
+  max-width: 80px;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+#btnDeleteSelected,
+#btnDeleteAll,
+#btnOrder,
+#btnContinue {
+  background-color: skyblue;
+}
+
+.cart-table th {
+  background-color: powderblue;
+}
+
+.bookName {
+  font-size: 1.3rem;
+}
+
+/* 책 정보 칸(p 기본 마진 때문에 간격 튀는 것 정리) */
+td.text-start p {
+  margin: 0;
+}
+
+/* 가격/합계는 줄바꿈 금지 */
+.price,
+.row-total-price,
+.cart-table tfoot td {
+  white-space: nowrap;
+}
+
+/* 수량 input이 td 폭을 밀어내지 않게 고정 */
+.cart-table input[type="number"] {
+  max-width: 72px;
+  margin: 0 auto;
+}
