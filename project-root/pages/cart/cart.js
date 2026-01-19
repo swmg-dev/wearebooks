@@ -285,3 +285,57 @@ window.addEventListener("pageshow", (e) => {
   // persisted가 false여도 안전하게 초기화해도 됨
   resetCartUIState();
 });
+
+// 메인으로 가기 버튼
+const btnMain = document.getElementById("btnMain");
+
+if (btnMain) {
+  btnMain.addEventListener("click", () => {
+    location.href = "../../index.html";
+  });
+}
+
+// 삭제 버튼
+function getSelectedIds() {
+  return Array.from(document.querySelectorAll("#cartTbody .row-check:checked"))
+    .map((cb) => cb.closest("tr")?.dataset?.id)
+    .filter(Boolean);
+}
+
+const btnDelete = document.getElementById("btnDelete");
+
+if (btnDelete) {
+  btnDelete.addEventListener("click", () => {
+    const selectedIds = getSelectedIds();
+
+    if (selectedIds.length === 0) {
+      alert("삭제할 상품을 선택해 주세요.");
+      return;
+    }
+
+    // localStorage에서 선택된 것만 제거
+    const cartItems = getCartItems();
+    const remainItems = cartItems.filter((it) => !selectedIds.includes(it.id));
+    setCartItems(remainItems);
+
+    // 화면에서도 선택된 행 삭제
+    selectedIds.forEach((id) => {
+      const row = document.querySelector(`#cartTbody tr[data-id="${id}"]`);
+      if (row) row.remove();
+    });
+
+    // 장바구니가 비었으면 '담은 상품이 없습니다' 행 넣기
+    if (remainItems.length === 0) {
+      tbody.innerHTML = "";
+      const row = tbody.insertRow();
+      const cell = row.insertCell();
+      cell.colSpan = 5;
+      cell.textContent = "담은 상품이 없습니다.";
+    }
+
+    // 전체선택 UI 초기화 + 합계 갱신
+    resetCartUIState(); //
+    // 없으면 최소로 이거라도:
+    // updateSelectedGrandTotal();
+  });
+}
