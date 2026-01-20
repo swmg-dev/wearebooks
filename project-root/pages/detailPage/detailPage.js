@@ -115,7 +115,13 @@ function renderRecoBooks(list) {
   `).join("");
 }
 
-//
+//리뷰 버튼
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("btnReview")
+    ?.addEventListener("click", () => {
+      alert("리뷰가 잘 전달되었습니다");
+    });
+});
 
 
 document.addEventListener("DOMContentLoaded", () => {

@@ -17,6 +17,12 @@ body {
 main {
   flex: 1;
 }
+
+.cart-page {
+  background: #f3f3f3;
+  min-height: calc(100vh - var(--header-h) - var(--footer-h));
+}
+
 .bookImg {
   max-width: 80px;
   width: 100%;
