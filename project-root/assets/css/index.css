@@ -1,90 +1,87 @@
-    /* -------------------------------------------------------------------------- */
-    /* index 전용: header 아래 남은 화면을 main/footer 2칸으로 분할 */
-    .index-shell {
-        height: calc(100vh - var(--header-h));
-        display: grid;
-        grid-template-rows: 1fr var(--footer-h);
-        min-height: 0;
-    }
+/* -------------------------------------------------------------------------- */
+/* index 전용: header 아래 남은 화면을 main/footer 2칸으로 분할 */
+.index-shell {
+  height: calc(100vh - var(--header-h));
+  display: grid;
+  grid-template-rows: 1fr var(--footer-h);
+  min-height: 0;
+}
 
-    /* main 영역만 관리 */
-    .site-main {
-        position: relative;
-        overflow: hidden;
-    }
+/* main 영역만 관리 */
+.site-main {
+  position: relative;
+  overflow: hidden;
+}
 
-    /* 배경 이미지 */
-    .backImage {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-        opacity: 0.8;
-    }
+/* 배경 이미지 */
+.backImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0.8;
+}
 
-    .hero {
-        position: absolute;
-        left: clamp(16px, 5vw, 48px);
-        /* 화면 작으면 16px, 크면 48px 근처 */
-        top: 35%;
-        /* main 높이 기준 비율 위치 */
-        transform: translateY(-50%);
-        /* 기준점 보정 */
-        z-index: 2;
+.hero {
+  position: absolute;
+  left: clamp(16px, 5vw, 48px);
+  /* 화면 작으면 16px, 크면 48px 근처 */
+  top: 35%;
+  /* main 높이 기준 비율 위치 */
+  transform: translateY(-50%);
+  /* 기준점 보정 */
+  z-index: 2;
 
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-    }
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
 
-    .slogan-line {
-        white-space: nowrap;
-        /* 줄바꿈 금지 */
-        word-break: keep-all;
-        /* 한글 단어 쪼개짐 방지 */
-        overflow: hidden;
-        /* 화면 밖으로 나가면 잘라냄 */
-        text-overflow: ellipsis;
-        /* ... 처리(선택) */
-    }
+.slogan-line {
+  white-space: nowrap;
+  /* 줄바꿈 금지 */
+  word-break: keep-all;
+  /* 한글 단어 쪼개짐 방지 */
+  overflow: hidden;
+  /* 화면 밖으로 나가면 잘라냄 */
+  text-overflow: ellipsis;
+  /* ... 처리(선택) */
+}
 
-    .slogan h1 {
-        margin: 0;
-        font-weight: 800;
-        line-height: 1.2;
-        font-size: clamp(32px, 4.5vw, 56px);
-        color: #f3f3f3;
-    }
+.slogan h1 {
+  margin: 0;
+  font-weight: 800;
+  line-height: 1.2;
+  font-size: clamp(32px, 4.5vw, 56px);
+  color: #f3f3f3;
+}
 
-    .slogan span {
-        margin: 6px 0 0;
-        font-weight: 700;
-        line-height: 1.2;
-        font-size: clamp(100px, 2.6vw, 200px);
-        color: #de9961;
-    }
+.slogan span {
+  margin: 6px 0 0;
+  font-weight: 700;
+  line-height: 1.2;
+  font-size: clamp(100px, 2.6vw, 200px);
+  color: #de9961;
+}
 
-    .slogan {
-        text-shadow: 0 3px 10px rgba(0, 0, 0, 0.45);
-    }
+.slogan {
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.45);
+}
 
-    /* 검색창도 반응형 폭 */
-    .search input[type="text"] {
-        width: clamp(160px, 35vw, 360px);
-        height: 36px;
-        padding: 0 10px;
+/* 검색창도 반응형 폭 */
+.search input[type="text"] {
+  width: 100%;
+  height: 36px;
+  padding: 0 10px;
+  border: none;
+  border-bottom: 1.5px solid #de9961;
+  background-color: transparent;
+  color: #f3f3f3;
+  outline: none;
+  /* 포커스 기본 제거 */
+}
 
-        border: none;
-        border-bottom: 1.5px solid #de9961;
-
-        background-color: transparent;
-        color: #f3f3f3;
-
-        outline: none;
-        /* 포커스 기본 제거 */
-    }
-
-    /* .btnSearch {
+/* .btnSearch {
         background-image: url("/assets/imgs/searchIcon.png");
         background-repeat: no-repeat;
         background-position: center;
@@ -95,69 +92,110 @@
         background-color: transparent;
     } */
 
-    .search {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
+.search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-    .search-btn .icon {
-        width: 20px;
-        height: 20px;
-        color: #de9961;
-    }
+.search-btn .icon {
+  width: 20px;
+  height: 20px;
+  color: #de9961;
+}
 
-    .search-btn {
-        position: static;
-        /* 중요 */
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        padding: 4px;
+.search-btn {
+  position: static;
+  /* 중요 */
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
 
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
+.search-btn:hover {
+  opacity: 0.8;
+}
 
-    .search-btn:hover {
-        opacity: 0.8;
-    }
+@media (max-width: 840px) {
+  .search-box {
+    width: 220px;
+  }
+}
 
+@media (max-width: 600px) {
+  .slogan-text-up {
+    font-size: 2rem;
+  }
 
-    @media (max-width: 840px) {
-        .search input[type="text"] {
-            width: 220px;
-        }
-    }
+  .slogan-text-down {
+    font-size: 1rem;
+  }
 
-    @media (max-width: 600px) {
-        .slogan-text-up {
-            font-size: 2rem;
-        }
+  /* main 높이를 줄여서 과하게 커지는 것 방지 */
+  .site-main {
+    min-height: 280px;
+  }
+}
 
-        .slogan-text-down {
-            font-size: 1rem;
-        }
+/* header, main, footer 크기 조율 추가 코드 */
+/* vfooter 높이고정 */
+.site-footer {
+  height: var(--footer-h);
 
-        /* main 높이를 줄여서 과하게 커지는 것 방지 */
-        .site-main {
-            min-height: 280px;
-        }
-    }
+  display: flex;
+  justify-content: flex-end;
+  /* 오른쪽 */
+  align-items: flex-end;
+  /* 아래 */
 
-    /* header, main, footer 크기 조율 추가 코드 */
-    /* vfooter 높이고정 */
-    .site-footer {
-        height: var(--footer-h);
+  padding: 12px 16px;
+  /* 가장자리 여백 */
+}
 
-        display: flex;
-        justify-content: flex-end;
-        /* 오른쪽 */
-        align-items: flex-end;
-        /* 아래 */
+/* 검색 묶음(입력줄 + 결과리스트)을 기준으로 결과를 띄우기 */
+.search-box {
+  position: relative; /* absolute 기준점 */
+  width: clamp(160px, 35vw, 360px); /* input 폭과 맞추기 */
+}
 
-        padding: 12px 16px;
-        /* 가장자리 여백 */
-    }
+/* 결과 리스트: 입력창 아래 드롭다운 */
+.search-result {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: calc(100% + 8px); /* 검색줄(.search) 아래로 8px */
+
+  width: 100%;
+  margin: 0;
+  padding: 8px 0;
+  list-style: none;
+
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(222, 153, 97, 0.5); /* #de9961 톤 */
+  border-radius: 10px;
+
+  max-height: 220px;
+  overflow: auto;
+  z-index: 5;
+}
+
+/* 결과가 있을 때만 보이기 */
+.search-result.is-open {
+  display: block;
+}
+
+/* 결과 아이템 */
+.search-result li {
+  padding: 10px 12px;
+  color: #f3f3f3;
+  cursor: pointer;
+}
+
+.search-result li:hover {
+  background: rgba(222, 153, 97, 0.2);
+}
