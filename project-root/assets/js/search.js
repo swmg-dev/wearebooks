@@ -67,7 +67,7 @@ function renderGroupedResults(grouped) {
       const itemLi = document.createElement("li");
       itemLi.className = "search-item";
       itemLi.innerHTML = `
-        <span class="title">${book.title ?? ""}</span>
+        <span class="title">${book.title ?? ""}</span> -
         <span class="author">${book.author ?? ""}</span>
       `;
       ul.appendChild(itemLi);

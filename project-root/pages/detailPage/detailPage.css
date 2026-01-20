@@ -51,10 +51,10 @@
            display: grid;
            grid-template-columns: 1fr 320px;
            gap: 18px;
-           align-items: start;
+           align-items: stretch;
        }
 
-       /* 왼쪽 */
+       /* 왼쪽 박스*/
        .product-left {
            padding: 18px;
        }
@@ -102,7 +102,7 @@
        .side-actions {
            display: flex;
            flex-direction: column;
-           gap: 10px;
+           gap: 25px;
            margin-bottom: 12px;
        }
 
@@ -157,7 +157,7 @@
 
            z-index: 50;
            margin-top: 18px;
-           padding: 20px 12px;
+           padding: 20px 40px;
            background: #fff;
            border: 1px solid var(--border);
            border-radius: var(--radius);
@@ -328,6 +328,7 @@
            margin: 20px;
            padding: 12px;
            height: var(--footer-h);
+           text-align: center;
        }
 
        /* Mobile */

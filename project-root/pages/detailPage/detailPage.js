@@ -53,14 +53,70 @@ function render(book) {
     // 페이지 제목
     document.title = `${book.title} 상세페이지`;
 
+    //오른쪽 박스 제목, 지은이
+    const Rtitle = document.querySelector(".side-title");
+    if (Rtitle) Rtitle.textContent = `제목 : ${book.title}`;
+
+    const Rauthor = document.querySelector(".side-author");
+    if (Rauthor) Rauthor.textContent = `지은이 : ${book.author}`;
+
+    //카테고리
+    const Rcategory = document.querySelector(".side-category");
+    if (!book.category) { Rcategory.textContent = '카테고리 : BEST 도서' }
+    else { Rcategory.textContent = `카테고리 : ${book.category}` };
+
+
     // 가격
-    const priceLine = document.querySelector(".mini-info > div:nth-child(1)");
-    if (priceLine) priceLine.textContent = `가격: ${won(book.price)}`;
+    const priceLine = document.querySelector(".side-price");
+    if (priceLine) priceLine.textContent = `${won(book.price)}`;
 
     // 소개 영역
     const intro = document.querySelector("#intro .muted");
     intro.textContent = "〈마스터셰프 코리아2〉의 우승자이자 〈흑백요리사〉 〈냉장고를 부탁해〉 등에 출연한 셰프 최강록의 자전적 에세이. 음식, 요리, 식당, 요리사라는 네 가지 키워드로 지난날과 지금의 일상을 담았다. 요리사라는 직업인으로서, 먹는 것을 좋아하는 평범한 생활인으로서 잔잔하면서도 솔직하게 써내려간 기쁨과 슬픔, 희망과 걱정이 독자들의 몰입과 공감을 높인다. 이 책 곳곳에 돋보이는 최강록 특유의 유머 사이에 가슴 찡한 장면들이 반짝인다. 이 진솔한 에세이를 읽다보면 음식과 요리란 무엇인지, 일과 직업이란 무슨 의미인지 생각해보게 될 것이다.〈마스터셰프 코리아2〉의 우승자이자 〈흑백요리사〉 〈냉장고를 부탁해〉 등에 출연한 셰프 최강록의 자전적 에세이. 음식, 요리, 식당, 요리사라는 네 가지 키워드로 지난날과 지금의 일상을 담았다. 요리사라는 직업인으로서, 먹는 것을 좋아하는 평범한 생활인으로서 잔잔하면서도 솔직하게 써내려간 기쁨과 슬픔, 희망과 걱정이 독자들의 몰입과 공감을 높인다. 이 책 곳곳에 돋보이는 최강록 특유의 유머 사이에 가슴 찡한 장면들이 반짝인다. 이 진솔한 에세이를 읽다보면 음식과 요리란 무엇인지, 일과 직업이란 무슨 의미인지 생각해보게 될 것이다.〈마스터셰프 코리아2〉의 우승자이자 〈흑백요리사〉 〈냉장고를 부탁해〉 등에 출연한 셰프 최강록의 자전적 에세이. 음식, 요리, 식당, 요리사라는 네 가지 키워드로 지난날과 지금의 일상을 담았다. 요리사라는 직업인으로서, 먹는 것을 좋아하는 평범한 생활인으로서 잔잔하면서도 솔직하게 써내려간 기쁨과 슬픔, 희망과 걱정이 독자들의 몰입과 공감을 높인다. 이 책 곳곳에 돋보이는 최강록 특유의 유머 사이에 가슴 찡한 장면들이 반짝인다. 이 진솔한 에세이를 읽다보면 음식과 요리란 무엇인지, 일과 직업이란 무슨 의미인지 생각해보게 될 것이다.〈마스터셰프 코리아2〉의 우승자이자 〈흑백요리사〉 〈냉장고를 부탁해〉 등에 출연한 셰프 최강록의 자전적 에세이. 음식, 요리, 식당, 요리사라는 네 가지 키워드로 지난날과 지금의 일상을 담았다. 요리사라는 직업인으로서, 먹는 것을 좋아하는 평범한 생활인으로서 잔잔하면서도 솔직하게 써내려간 기쁨과 슬픔, 희망과 걱정이 독자들의 몰입과 공감을 높인다. 이 책 곳곳에 돋보이는 최강록 특유의 유머 사이에 가슴 찡한 장면들이 반짝인다. 이 진솔한 에세이를 읽다보면 음식과 요리란 무엇인지, 일과 직업이란 무슨 의미인지 생각해보게 될 것이다.〈마스터셰프 코리아2〉의 우승자이자 〈흑백요리사〉 〈냉장고를 부탁해〉 등에 출연한 셰프 최강록의 자전적 에세이. 음식, 요리, 식당, 요리사라는 네 가지 키워드로 지난날과 지금의 일상을 담았다. 요리사라는 직업인으로서, 먹는 것을 좋아하는 평범한 생활인으로서 잔잔하면서도 솔직하게 써내려간 기쁨과 슬픔, 희망과 걱정이 독자들의 몰입과 공감을 높인다. 이 책 곳곳에 돋보이는 최강록 특유의 유머 사이에 가슴 찡한 장면들이 반짝인다. 이 진솔한 에세이를 읽다보면 음식과 요리란 무엇인지, 일과 직업이란 무슨 의미인지 생각해보게 될 것이다.〈마스터셰프 코리아2〉의 우승자이자 〈흑백요리사〉 〈냉장고를 부탁해〉 등에 출연한 셰프 최강록의 자전적 에세이. 음식, 요리, 식당, 요리사라는 네 가지 키워드로 지난날과 지금의 일상을 담았다. 요리사라는 직업인으로서, 먹는 것을 좋아하는 평범한 생활인으로서 잔잔하면서도 솔직하게 써내려간 기쁨과 슬픔, 희망과 걱정이 독자들의 몰입과 공감을 높인다. 이 책 곳곳에 돋보이는 최강록 특유의 유머 사이에 가슴 찡한 장면들이 반짝인다. 이 진솔한 에세이를 읽다보면 음식과 요리란 무엇인지, 일과 직업이란 무슨 의미인지 생각해보게 될 것이다."
+
 }
+
+//
+//추천 도서()
+//
+function pickRecoBooks(currentBook, count = 5) {
+    // 1) 베스트(true)만 후보로
+    const pool = books
+        .filter(b => b.isBest === true)
+        .filter(b => b.id !== currentBook.id); // 자기 자신 제외
+
+    // 2) 섞어서 count개
+    const shuffled = pool.sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, count);
+}
+
+function renderRecoBooks(list) {
+    const row = document.getElementById("recoRow");
+    if (!row) return;
+
+    row.innerHTML = list.map(b => `
+    <a class="reco-card" href="detailPage.html?id=${b.id}">
+      <img src="${b.image}" alt="${b.title}">
+      <div class="reco-title">${b.title}</div>
+    </a>
+  `).join("");
+}
+
+
+function renderRecoBooks(list) {
+    const row = document.getElementById("recoRow");
+    if (!row) return;
+
+    row.innerHTML = list.map(book => `
+    <a class="reco-card" href="detailPage.html?id=${book.id}">
+      <img src="${book.image}" alt="${book.title}">
+      <div class="reco-title">${book.title}</div>
+    </a>
+  `).join("");
+}
+
+//
+
 
 document.addEventListener("DOMContentLoaded", () => {
     if (!books || !Array.isArray(books)) {
@@ -109,5 +165,10 @@ document.addEventListener("DOMContentLoaded", () => {
     toTopBtn.addEventListener("click", () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     });
+
+    //추천 도서 실행
+    const recoList = pickRecoBooks(book, 5);
+    renderRecoBooks(recoList);
+
 });
 
