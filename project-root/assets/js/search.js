@@ -49,6 +49,7 @@ function renderGroupedResults(grouped) {
   list.innerHTML = "";
 
   const order = ["domestic", "overseas", "used", "ebook"];
+
   order.forEach((key) => {
     const items = grouped[key];
     if (!items || items.length === 0) return;
@@ -56,25 +57,55 @@ function renderGroupedResults(grouped) {
     const sectionLi = document.createElement("li");
     sectionLi.className = "search-group";
 
-    sectionLi.innerHTML = `
-      <div class="search-group__title">[${getProductLabel(key)}]</div>
-      <ul class="search-group__list"></ul>
-    `;
+    const titleDiv = document.createElement("div");
+    titleDiv.className = "search-group__title";
+    titleDiv.textContent = `[${getProductLabel(key)}]`;
 
-    const ul = sectionLi.querySelector(".search-group__list");
+    const ul = document.createElement("ul");
+    ul.className = "search-group__list";
 
     items.forEach((book) => {
       const itemLi = document.createElement("li");
       itemLi.className = "search-item";
-      itemLi.innerHTML = `
-        <span class="title">${book.title ?? ""}</span> -
-        <span class="author">${book.author ?? ""}</span>
-      `;
+
+      // ✅ 핵심: 상세페이지 링크 만들기
+      // index.html 기준 상대경로: pages/detailPage/detailPage.html
+      const a = document.createElement("a");
+      const id = book.id ?? "";
+      a.href = `pages/detailPage/detailPage.html?id=${encodeURIComponent(id)}`;
+
+      const titleSpan = document.createElement("span");
+      titleSpan.className = "title";
+      titleSpan.textContent = book.title ?? "";
+
+      const authorSpan = document.createElement("span");
+      authorSpan.className = "author";
+      authorSpan.textContent = book.author ?? "";
+
+      a.appendChild(titleSpan);
+      a.appendChild(document.createTextNode(" - "));
+      a.appendChild(authorSpan);
+
+      itemLi.appendChild(a);
       ul.appendChild(itemLi);
     });
 
+    sectionLi.appendChild(titleDiv);
+    sectionLi.appendChild(ul);
     list.appendChild(sectionLi);
   });
+
+  // (선택) 결과 클릭하면 목록 닫기
+  // list 안에서 a 클릭 시 닫히도록 이벤트 위임
+  list.addEventListener(
+    "click",
+    (e) => {
+      const link = e.target.closest("a");
+      if (!link) return;
+      closeResults();
+    },
+    { once: true },
+  );
 }
 
 searchBtn.addEventListener("click", (e) => {

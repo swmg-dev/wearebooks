@@ -199,3 +199,23 @@
 .search-result li:hover {
   background: rgba(222, 153, 97, 0.2);
 }
+
+/* 검색 결과 링크 기본색/방문색/밑줄 제거 */
+#list a,
+#list a:link,
+#list a:visited {
+  color: inherit; /* 부모(li) 글자색 따라감 */
+  text-decoration: none; /* 밑줄 제거 */
+}
+
+/* hover/focus 때도 색 튀지 않게 */
+#list a:hover,
+#list a:focus {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* 클릭 중(active)도 */
+#list a:active {
+  color: inherit;
+}
