@@ -133,3 +133,17 @@ searchInput.addEventListener("input", () => {
   const val = searchInput.value.trim();
   if (!val) closeResults();
 });
+
+function resetSearchUI() {
+  // input 비우기
+  if (searchInput) searchInput.value = "";
+
+  // 결과 닫기 + 비우기
+  closeResults();
+}
+
+// 뒤로가기/앞으로가기(bfcache) 포함: 화면에 다시 나타날 때마다 초기화
+window.addEventListener("pageshow", (e) => {
+  // e.persisted === true면 bfcache로 복원된 케이스(뒤로가기)
+  resetSearchUI();
+});
