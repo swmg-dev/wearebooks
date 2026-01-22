@@ -12,10 +12,8 @@ const PENDING_BASE = "weAre_pending_order";
 
 // [페이지네이션 설정]
 const ROWS_PER_PAGE = 10; // 한 페이지당 5개
-let currentPage = 1;     // 현재 페이지
-let allOrders = [];      // 전체 주문 내역을 담을 전역 변수
-
-
+let currentPage = 1; // 현재 페이지
+let allOrders = []; // 전체 주문 내역을 담을 전역 변수
 
 // ===== Toast =====
 const toastEl = document.getElementById("toast");
@@ -28,7 +26,10 @@ function toast(msg, ms = 1400) {
 }
 
 function isLoggedIn() {
-  return Boolean(localStorage.getItem("accessToken")) && Boolean(localStorage.getItem(LOGIN_ID_KEY));
+  return (
+    Boolean(localStorage.getItem("accessToken")) &&
+    Boolean(localStorage.getItem(LOGIN_ID_KEY))
+  );
 }
 
 function getUserId() {
@@ -45,7 +46,9 @@ function getOrdersKey() {
 // myPage가 "어떤 orderId를 이미 가져왔는지"를 유저별로 기억해야 중복 import를 막을 수 있음
 function getImportedKey() {
   const userId = getUserId();
-  return userId ? `weAre_imported_orderIds:${userId}` : "weAre_imported_orderIds";
+  return userId
+    ? `weAre_imported_orderIds:${userId}`
+    : "weAre_imported_orderIds";
 }
 
 // pending도 유저별(혹시 쓰게 되면)
@@ -53,8 +56,6 @@ function getPendingKey() {
   const userId = getUserId();
   return userId ? `${PENDING_BASE}:${userId}` : PENDING_BASE;
 }
-
-
 
 const tbody = document.getElementById("ordersTbody");
 
@@ -79,6 +80,8 @@ function saveOrders(orders) {
 }
 
 // ===== 유틸 =====
+
+/* 민경 추가*/
 function escapeHtml(str) {
   return String(str)
     .replaceAll("&", "&amp;")
@@ -143,17 +146,17 @@ function setImportedOrderIds(ids) {
  * cart.js가 만든 orders(주문 묶음) → myPage row(아이템 단위)로 변환해서 저장
  * 수정 사항: cart.js에서 수량 반영이 안 된 경우를 대비해 cartItems의 최신 수량을 참조함
  */
+
+/* 민경: importFromCartOrders 함수 수정 */
 function importFromCartOrders(ordersInMyPage) {
   const cartOrders = getCartOrders();
-  // ❗️ 추가: 최신 장바구니 상태를 가져와서 수량 매칭 준비
-  const rawCart = localStorage.getItem("cartItems");
-  const latestCartItems = rawCart ? JSON.parse(rawCart) : [];
-
   if (!cartOrders.length) return ordersInMyPage;
 
   const imported = new Set(getImportedOrderIds());
-  const newBundles = cartOrders.filter((o) => o?.orderId && !imported.has(o.orderId));
-  
+  const newBundles = cartOrders.filter(
+    (o) => o?.orderId && !imported.has(o.orderId),
+  );
+
   if (!newBundles.length) return ordersInMyPage;
 
   const normalizedRows = [];
@@ -163,34 +166,28 @@ function importFromCartOrders(ordersInMyPage) {
     const items = Array.isArray(bundle.items) ? bundle.items : [];
 
     for (const it of items) {
-      // ❗️ 핵심 로직: 만약 cart.js가 수량을 1로 보냈더라도, 
-      // 장바구니(latestCartItems)에 해당 상품이 남아있다면 그 수량을 우선 사용합니다.
-      const matchInCart = latestCartItems.find(c => c.id === it.id);
-      const finalQty = matchInCart ? normalizeQty(matchInCart.qty) : normalizeQty(it.qty);
-
       normalizedRows.push({
         id: String(it?.id ?? ""),
         title: String(it?.title ?? ""),
         price: Number(it?.price ?? 0),
-        img: String(it?.img ?? ""),
+        img: it?.img ?? "",
         author: String(it?.author ?? ""),
-        qty: finalQty, // 최신화된 수량 적용
+        qty: normalizeQty(it?.qty),
         status: "주문완료",
         date,
         _fromOrderId: bundle.orderId,
       });
     }
+
     imported.add(bundle.orderId);
   }
 
-  const cleaned = normalizedRows.filter((x) => x.id && x.title);
-
-  if (!cleaned.length) {
+  if (!normalizedRows.length) {
     setImportedOrderIds(Array.from(imported));
     return ordersInMyPage;
   }
 
-  const next = [...cleaned, ...ordersInMyPage];
+  const next = [...normalizedRows, ...ordersInMyPage];
   saveOrders(next);
   setImportedOrderIds(Array.from(imported));
 
@@ -254,10 +251,10 @@ function renderOrders(orders) {
 
   tbody.innerHTML = orders
     .map((o) => {
-        // 아까 수정한 가격 로직 (단가 * 수량)
-        const totalPrice = o.price * o.qty; 
-        
-        return `
+      // 아까 수정한 가격 로직 (단가 * 수량)
+      const totalPrice = o.price * o.qty;
+
+      return `
         <tr>
           <td><img src="${escapeHtml(o.img)}" alt="${escapeHtml(o.title)}" style="width:60px; height:auto;"></td>
           <td>${escapeHtml(o.id)}</td>
@@ -278,7 +275,8 @@ function renderOrders(orders) {
           </td>
         </tr>
       `;
-    }).join("");
+    })
+    .join("");
 
   // 조회 버튼 이벤트 연결
   document.querySelectorAll(".track-btn").forEach((btn) => {
@@ -305,7 +303,7 @@ function updatePage(page) {
   }
 
   currentPage = page;
-  
+
   // 데이터 자르기 (slice)
   const start = (currentPage - 1) * ROWS_PER_PAGE;
   const end = start + ROWS_PER_PAGE;
@@ -313,7 +311,7 @@ function updatePage(page) {
 
   // 잘린 데이터로 테이블 그리기
   renderOrders(slicedOrders);
-  
+
   // 페이지네이션 버튼 다시 그리기
   renderPaginationUI(allOrders.length, currentPage);
 }
@@ -347,11 +345,11 @@ function renderPaginationUI(totalCount, curPage) {
 }
 
 // 3. HTML onclick에서 부를 함수 (전역)
-window.goToPage = function(page) {
+window.goToPage = function (page) {
   if (page < 1) return;
   const totalPages = Math.ceil(allOrders.length / ROWS_PER_PAGE);
   if (page > totalPages) return;
-  
+
   updatePage(page);
 };
 
@@ -389,16 +387,22 @@ if (modal && closeBtn) {
     if (e.key === "Escape" && modal.dataset.open === "true") closeModal();
   });
 } else {
-  if (!modal) console.error("[myPage] trackModal 요소를 못 찾았어. HTML id='trackModal' 확인");
-  if (!closeBtn) console.error("[myPage] closeBtn 요소를 못 찾았어. HTML id='closeBtn' 확인");
+  if (!modal)
+    console.error(
+      "[myPage] trackModal 요소를 못 찾았어. HTML id='trackModal' 확인",
+    );
+  if (!closeBtn)
+    console.error(
+      "[myPage] closeBtn 요소를 못 찾았어. HTML id='closeBtn' 확인",
+    );
 }
 // ===== 실행 =====
 if (!isLoggedIn()) {
   if (tbody) tbody.innerHTML = "";
   // 페이지네이션 숨기기
   const p = document.getElementById("pagination");
-  if(p) p.innerHTML = "";
-  
+  if (p) p.innerHTML = "";
+
   toast("로그인 후 이용해주세요.");
   closeModal();
 } else {
