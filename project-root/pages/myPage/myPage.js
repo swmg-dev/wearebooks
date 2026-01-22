@@ -8,6 +8,15 @@ const CART_ORDERS_KEY = "orders";
 // (선택) pending 키도 남겨두기 (팀에서 나중에 쓰면 자동 지원)
 const PENDING_BASE = "weAre_pending_order";
 
+// ... 기존 상수들 ...
+
+// [페이지네이션 설정]
+const ROWS_PER_PAGE = 10; // 한 페이지당 5개
+let currentPage = 1;     // 현재 페이지
+let allOrders = [];      // 전체 주문 내역을 담을 전역 변수
+
+
+
 // ===== Toast =====
 const toastEl = document.getElementById("toast");
 function toast(msg, ms = 1400) {
@@ -130,14 +139,21 @@ function setImportedOrderIds(ids) {
  * cart.js가 만든 orders(주문 묶음) → myPage row(아이템 단위)로 변환해서 저장
  * - 중복 방지: orderId 기준으로 이미 import한 건 스킵
  */
+/**
+ * cart.js가 만든 orders(주문 묶음) → myPage row(아이템 단위)로 변환해서 저장
+ * 수정 사항: cart.js에서 수량 반영이 안 된 경우를 대비해 cartItems의 최신 수량을 참조함
+ */
 function importFromCartOrders(ordersInMyPage) {
   const cartOrders = getCartOrders();
+  // ❗️ 추가: 최신 장바구니 상태를 가져와서 수량 매칭 준비
+  const rawCart = localStorage.getItem("cartItems");
+  const latestCartItems = rawCart ? JSON.parse(rawCart) : [];
+
   if (!cartOrders.length) return ordersInMyPage;
 
   const imported = new Set(getImportedOrderIds());
-
-  // 아직 import 안 된 주문만
   const newBundles = cartOrders.filter((o) => o?.orderId && !imported.has(o.orderId));
+  
   if (!newBundles.length) return ordersInMyPage;
 
   const normalizedRows = [];
@@ -147,24 +163,26 @@ function importFromCartOrders(ordersInMyPage) {
     const items = Array.isArray(bundle.items) ? bundle.items : [];
 
     for (const it of items) {
-      // myPage row 포맷으로 변환
+      // ❗️ 핵심 로직: 만약 cart.js가 수량을 1로 보냈더라도, 
+      // 장바구니(latestCartItems)에 해당 상품이 남아있다면 그 수량을 우선 사용합니다.
+      const matchInCart = latestCartItems.find(c => c.id === it.id);
+      const finalQty = matchInCart ? normalizeQty(matchInCart.qty) : normalizeQty(it.qty);
+
       normalizedRows.push({
         id: String(it?.id ?? ""),
         title: String(it?.title ?? ""),
         price: Number(it?.price ?? 0),
         img: String(it?.img ?? ""),
         author: String(it?.author ?? ""),
-        qty: normalizeQty(it?.qty),
+        qty: finalQty, // 최신화된 수량 적용
         status: "주문완료",
-        date, // 모달에서 사용
-        _fromOrderId: bundle.orderId, // 추적용(표시 안 함)
+        date,
+        _fromOrderId: bundle.orderId,
       });
     }
-
     imported.add(bundle.orderId);
   }
 
-  // id/title 없는 것 제거
   const cleaned = normalizedRows.filter((x) => x.id && x.title);
 
   if (!cleaned.length) {
@@ -172,9 +190,7 @@ function importFromCartOrders(ordersInMyPage) {
     return ordersInMyPage;
   }
 
-  // 최신 주문이 위로
   const next = [...cleaned, ...ordersInMyPage];
-
   saveOrders(next);
   setImportedOrderIds(Array.from(imported));
 
@@ -220,6 +236,8 @@ function consumePendingOrder(orders) {
 }
 
 // ===== 렌더 =====
+// ===== 렌더 (수정됨) =====
+// ===== 렌더 (수정없음 - 아까 수정한 버전 그대로 사용) =====
 function renderOrders(orders) {
   if (!tbody) return;
 
@@ -235,38 +253,38 @@ function renderOrders(orders) {
   }
 
   tbody.innerHTML = orders
-    .map(
-      (o) => `
-      <tr>
-        <td>
-          <img src="${escapeHtml(o.img)}" alt="${escapeHtml(o.title)}" style="width:60px; height:auto;">
-        </td>
-        <td>${escapeHtml(o.id)}</td>
-        <td>${formatPrice(o.price)}</td>
-        <td>${escapeHtml(o.title)}</td>
-        <td>${escapeHtml(o.author)}</td>
-        <td>${escapeHtml(o.qty)}</td>
-        <td><span class="status">${escapeHtml(o.status || "주문완료")}</span></td>
-        <td>
-          <button class="btn track-btn"
-            data-id="${escapeHtml(o.id)}"
-            data-title="${escapeHtml(o.title)}"
-            data-author="${escapeHtml(o.author)}"
-            data-qty="${escapeHtml(o.qty)}"
-            data-status="${escapeHtml(o.status || "주문완료")}"
-            data-date="${escapeHtml(o.date || "-")}">
-            조회
-          </button>
-        </td>
-      </tr>
-    `
-    )
-    .join("");
+    .map((o) => {
+        // 아까 수정한 가격 로직 (단가 * 수량)
+        const totalPrice = o.price * o.qty; 
+        
+        return `
+        <tr>
+          <td><img src="${escapeHtml(o.img)}" alt="${escapeHtml(o.title)}" style="width:60px; height:auto;"></td>
+          <td>${escapeHtml(o.id)}</td>
+          <td>${formatPrice(totalPrice)}</td> <td>${escapeHtml(o.title)}</td>
+          <td>${escapeHtml(o.author)}</td>
+          <td>${escapeHtml(o.qty)}</td>
+          <td><span class="status">${escapeHtml(o.status || "주문완료")}</span></td>
+          <td>
+            <button class="btn track-btn"
+              data-id="${escapeHtml(o.id)}"
+              data-title="${escapeHtml(o.title)}"
+              data-author="${escapeHtml(o.author)}"
+              data-qty="${escapeHtml(o.qty)}"
+              data-status="${escapeHtml(o.status || "주문완료")}"
+              data-date="${escapeHtml(o.date || "-")}">
+              조회
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join("");
 
+  // 조회 버튼 이벤트 연결
   document.querySelectorAll(".track-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       openModal({
-        order: btn.dataset.id, // 주문번호 대신 책ID 보여주는 현재 방식 유지
+        order: btn.dataset.id,
         date: btn.dataset.date || "-",
         book: `${btn.dataset.title} (${btn.dataset.author})`,
         qty: btn.dataset.qty,
@@ -275,6 +293,67 @@ function renderOrders(orders) {
     });
   });
 }
+
+// ===== 페이지네이션 로직 =====
+
+// 1. 현재 페이지에 맞는 데이터만 잘라서 보여주기
+function updatePage(page) {
+  if (!allOrders.length) {
+    renderOrders([]);
+    renderPaginationUI(0, 1);
+    return;
+  }
+
+  currentPage = page;
+  
+  // 데이터 자르기 (slice)
+  const start = (currentPage - 1) * ROWS_PER_PAGE;
+  const end = start + ROWS_PER_PAGE;
+  const slicedOrders = allOrders.slice(start, end);
+
+  // 잘린 데이터로 테이블 그리기
+  renderOrders(slicedOrders);
+  
+  // 페이지네이션 버튼 다시 그리기
+  renderPaginationUI(allOrders.length, currentPage);
+}
+
+// 2. 페이지네이션 버튼 UI 생성
+function renderPaginationUI(totalCount, curPage) {
+  const paginationEl = document.getElementById("pagination");
+  if (!paginationEl) return;
+
+  if (totalCount === 0) {
+    paginationEl.innerHTML = "";
+    return;
+  }
+
+  const totalPages = Math.ceil(totalCount / ROWS_PER_PAGE);
+  let html = "";
+
+  // [이전] 버튼
+  html += `<button class="pagination-btn" onclick="goToPage(${curPage - 1})" ${curPage === 1 ? "disabled" : ""}>&lt;</button>`;
+
+  // [숫자] 버튼들
+  for (let i = 1; i <= totalPages; i++) {
+    const activeClass = i === curPage ? "active" : "";
+    html += `<button class="pagination-btn ${activeClass}" onclick="goToPage(${i})">${i}</button>`;
+  }
+
+  // [다음] 버튼
+  html += `<button class="pagination-btn" onclick="goToPage(${curPage + 1})" ${curPage === totalPages ? "disabled" : ""}>&gt;</button>`;
+
+  paginationEl.innerHTML = html;
+}
+
+// 3. HTML onclick에서 부를 함수 (전역)
+window.goToPage = function(page) {
+  if (page < 1) return;
+  const totalPages = Math.ceil(allOrders.length / ROWS_PER_PAGE);
+  if (page > totalPages) return;
+  
+  updatePage(page);
+};
 
 // ===== Modal =====
 const modal = document.getElementById("trackModal");
@@ -313,20 +392,24 @@ if (modal && closeBtn) {
   if (!modal) console.error("[myPage] trackModal 요소를 못 찾았어. HTML id='trackModal' 확인");
   if (!closeBtn) console.error("[myPage] closeBtn 요소를 못 찾았어. HTML id='closeBtn' 확인");
 }
-
 // ===== 실행 =====
 if (!isLoggedIn()) {
   if (tbody) tbody.innerHTML = "";
+  // 페이지네이션 숨기기
+  const p = document.getElementById("pagination");
+  if(p) p.innerHTML = "";
+  
   toast("로그인 후 이용해주세요.");
   closeModal();
 } else {
-  let orders = loadOrders();
+  // 1. 데이터 로드 및 합치기
+  let loaded = loadOrders();
+  loaded = importFromCartOrders(loaded);
+  loaded = consumePendingOrder(loaded);
 
-  // ✅ 1) cart.js가 만든 orders를 먼저 흡수 (핵심)
-  orders = importFromCartOrders(orders);
+  // 2. 전역 변수에 저장 (중요!)
+  allOrders = loaded;
 
-  // ✅ 2) (선택) pending도 흡수
-  orders = consumePendingOrder(orders);
-
-  renderOrders(orders);
+  // 3. 첫 페이지 보여주기
+  updatePage(1);
 }

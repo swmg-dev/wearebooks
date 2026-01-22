@@ -70,6 +70,10 @@ function render(book) {
     const priceLine = document.querySelector(".side-price");
     if (priceLine) priceLine.textContent = `${won(book.price)}`;
 
+    const subnavPrice = document.querySelector(".subnavRprice");
+    if (subnavPrice) subnavPrice.textContent = `${won(book.price)}`;
+
+
     // 소개 영역
     const intro = document.querySelector("#intro .muted");
     intro.textContent = "〈마스터셰프 코리아2〉의 우승자이자 〈흑백요리사〉 〈냉장고를 부탁해〉 등에 출연한 셰프 최강록의 자전적 에세이. 음식, 요리, 식당, 요리사라는 네 가지 키워드로 지난날과 지금의 일상을 담았다. 요리사라는 직업인으로서, 먹는 것을 좋아하는 평범한 생활인으로서 잔잔하면서도 솔직하게 써내려간 기쁨과 슬픔, 희망과 걱정이 독자들의 몰입과 공감을 높인다. 이 책 곳곳에 돋보이는 최강록 특유의 유머 사이에 가슴 찡한 장면들이 반짝인다. 이 진솔한 에세이를 읽다보면 음식과 요리란 무엇인지, 일과 직업이란 무슨 의미인지 생각해보게 될 것이다.〈마스터셰프 코리아2〉의 우승자이자 〈흑백요리사〉 〈냉장고를 부탁해〉 등에 출연한 셰프 최강록의 자전적 에세이. 음식, 요리, 식당, 요리사라는 네 가지 키워드로 지난날과 지금의 일상을 담았다. 요리사라는 직업인으로서, 먹는 것을 좋아하는 평범한 생활인으로서 잔잔하면서도 솔직하게 써내려간 기쁨과 슬픔, 희망과 걱정이 독자들의 몰입과 공감을 높인다. 이 책 곳곳에 돋보이는 최강록 특유의 유머 사이에 가슴 찡한 장면들이 반짝인다. 이 진솔한 에세이를 읽다보면 음식과 요리란 무엇인지, 일과 직업이란 무슨 의미인지 생각해보게 될 것이다.〈마스터셰프 코리아2〉의 우승자이자 〈흑백요리사〉 〈냉장고를 부탁해〉 등에 출연한 셰프 최강록의 자전적 에세이. 음식, 요리, 식당, 요리사라는 네 가지 키워드로 지난날과 지금의 일상을 담았다. 요리사라는 직업인으로서, 먹는 것을 좋아하는 평범한 생활인으로서 잔잔하면서도 솔직하게 써내려간 기쁨과 슬픔, 희망과 걱정이 독자들의 몰입과 공감을 높인다. 이 책 곳곳에 돋보이는 최강록 특유의 유머 사이에 가슴 찡한 장면들이 반짝인다. 이 진솔한 에세이를 읽다보면 음식과 요리란 무엇인지, 일과 직업이란 무슨 의미인지 생각해보게 될 것이다.〈마스터셰프 코리아2〉의 우승자이자 〈흑백요리사〉 〈냉장고를 부탁해〉 등에 출연한 셰프 최강록의 자전적 에세이. 음식, 요리, 식당, 요리사라는 네 가지 키워드로 지난날과 지금의 일상을 담았다. 요리사라는 직업인으로서, 먹는 것을 좋아하는 평범한 생활인으로서 잔잔하면서도 솔직하게 써내려간 기쁨과 슬픔, 희망과 걱정이 독자들의 몰입과 공감을 높인다. 이 책 곳곳에 돋보이는 최강록 특유의 유머 사이에 가슴 찡한 장면들이 반짝인다. 이 진솔한 에세이를 읽다보면 음식과 요리란 무엇인지, 일과 직업이란 무슨 의미인지 생각해보게 될 것이다.〈마스터셰프 코리아2〉의 우승자이자 〈흑백요리사〉 〈냉장고를 부탁해〉 등에 출연한 셰프 최강록의 자전적 에세이. 음식, 요리, 식당, 요리사라는 네 가지 키워드로 지난날과 지금의 일상을 담았다. 요리사라는 직업인으로서, 먹는 것을 좋아하는 평범한 생활인으로서 잔잔하면서도 솔직하게 써내려간 기쁨과 슬픔, 희망과 걱정이 독자들의 몰입과 공감을 높인다. 이 책 곳곳에 돋보이는 최강록 특유의 유머 사이에 가슴 찡한 장면들이 반짝인다. 이 진솔한 에세이를 읽다보면 음식과 요리란 무엇인지, 일과 직업이란 무슨 의미인지 생각해보게 될 것이다.〈마스터셰프 코리아2〉의 우승자이자 〈흑백요리사〉 〈냉장고를 부탁해〉 등에 출연한 셰프 최강록의 자전적 에세이. 음식, 요리, 식당, 요리사라는 네 가지 키워드로 지난날과 지금의 일상을 담았다. 요리사라는 직업인으로서, 먹는 것을 좋아하는 평범한 생활인으로서 잔잔하면서도 솔직하게 써내려간 기쁨과 슬픔, 희망과 걱정이 독자들의 몰입과 공감을 높인다. 이 책 곳곳에 돋보이는 최강록 특유의 유머 사이에 가슴 찡한 장면들이 반짝인다. 이 진솔한 에세이를 읽다보면 음식과 요리란 무엇인지, 일과 직업이란 무슨 의미인지 생각해보게 될 것이다."
@@ -140,8 +144,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     render(book);
-
-    // 장바구니 담기
+    // leftbox
+    // 장바구니 담기 
     document.getElementById("btnAddCart").addEventListener("click", () => {
         const result = addToCartOnce(book);
 
@@ -162,6 +166,30 @@ document.addEventListener("DOMContentLoaded", () => {
             location.href = "../myPage/myPage.html";
         });
     }
+
+    // subnav
+    // 장바구니 담기 
+    document.getElementById("btnAddCartsubnav").addEventListener("click", () => {
+        const result = addToCartOnce(book);
+
+        // 이미 담김이면 여기서 메시지 줄 수도 있음
+        if (result.ok === false && result.reason === "EXISTS") {
+            // alert("이미 장바구니에 담긴 상품입니다");
+        }
+
+        const goCart = confirm("장바구니로 이동할까요?");
+        if (goCart) location.href = "../cart/cart.html";
+    });
+
+    // 구매하기
+    const buyBtnsubnav = document.getElementById("btnBuyNowsubnav");
+    if (buyBtnsubnav) {
+        buyBtnsubnav.addEventListener("click", () => {
+            alert("구매 완료");
+            location.href = "../myPage/myPage.html";
+        });
+    }
+    
 
     // TOP 버튼(기존 유지)
     const toTopBtn = document.getElementById("toTopBtn");
