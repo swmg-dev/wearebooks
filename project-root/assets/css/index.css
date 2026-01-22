@@ -219,3 +219,16 @@
 #list a:active {
   color: inherit;
 }
+/* 검색 결과 한 줄 전체 클릭 가능하게 (핵심) */
+#list .search-item a {
+  display: block;
+  width: 100%;
+  padding: 10px 12px; /* 클릭 영역 넓히기 */
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+/* 기존에 li에 패딩이 있으면 겹치니까 li 패딩 제거 */
+.search-result li.search-item {
+  padding: 0;
+}

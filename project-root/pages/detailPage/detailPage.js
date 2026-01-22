@@ -1,11 +1,24 @@
-//localStorage.getItem("cartItems")
+//하나의 detailPage로 여러 책의 상세 정보를 
+// 동적으로 렌더링.(url파라미터:페이지 주소에 
+// 데이터를 전달하는 방식 ) => url에 해당책의 
+// id만 전달하여 하나의 detailPage에서 해당 id에 
+// 맞는 데이터를 불러오는 구조임.
 
-// detailPage.js
-const books = window.books; // books.js가 먼저 로드되어 있어야 함
+
+
+
+
+//장바구니에 잘 저장됐는지 콘솔에 확인 테스트용
+//localStorage.getItem("cartItems") 
+
+const books = window.books;
+//books.js에 있는 전역 배열 가져오기
 
 const CART_KEY = "cartItems";
+//localStorage에 장바구니 배열을 저장할 key 이름 설정
 
 const won = (n) => Number(n).toLocaleString() + "원";
+
 
 function getBookIdFromUrl() {
     return new URLSearchParams(location.search).get("id");
@@ -41,6 +54,7 @@ function addToCartOnce(book) {
 
     return { ok: true };
 }
+
 
 // ---- render
 function render(book) {
@@ -106,25 +120,12 @@ function renderRecoBooks(list) {
   `).join("");
 }
 
-
-function renderRecoBooks(list) {
-    const row = document.getElementById("recoRow");
-    if (!row) return;
-
-    row.innerHTML = list.map(book => `
-    <a class="reco-card" href="detailPage.html?id=${book.id}">
-      <img src="${book.image}" alt="${book.title}">
-      <div class="reco-title">${book.title}</div>
-    </a>
-  `).join("");
-}
-
 //리뷰 버튼
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("btnReview")
-    ?.addEventListener("click", () => {
-      alert("리뷰가 잘 전달되었습니다");
-    });
+    document.getElementById("btnReview")
+        ?.addEventListener("click", () => {
+            alert("리뷰가 잘 전달되었습니다");
+        });
 });
 
 
@@ -151,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // 이미 담김이면 여기서 메시지 줄 수도 있음
         if (result.ok === false && result.reason === "EXISTS") {
-            // alert("이미 장바구니에 담긴 상품입니다");
+            alert("이미 장바구니에 담긴 상품입니다");
         }
 
         const goCart = confirm("장바구니로 이동할까요?");
@@ -174,7 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // 이미 담김이면 여기서 메시지 줄 수도 있음
         if (result.ok === false && result.reason === "EXISTS") {
-            // alert("이미 장바구니에 담긴 상품입니다");
+            alert("이미 장바구니에 담긴 상품입니다");
         }
 
         const goCart = confirm("장바구니로 이동할까요?");
@@ -189,7 +190,49 @@ document.addEventListener("DOMContentLoaded", () => {
             location.href = "../myPage/myPage.html";
         });
     }
-    
+
+    //
+    const ORDER_KEY = "orders";
+
+    function getOrders() {
+        const raw = localStorage.getItem(ORDER_KEY);
+        return raw ? JSON.parse(raw) : [];
+    }
+    function setOrders(orders) {
+        localStorage.setItem(ORDER_KEY, JSON.stringify(orders));
+    }
+
+    buyBtn.addEventListener("click", () => {
+        const orders = getOrders();
+
+        const order = {   
+            orderId: Date.now(),
+            items: [{ id: book.id, title: book.title, price: book.price, qty: 1 ,author:book.author, img:book.image}],
+            total: book.price,
+            createdAt: new Date().toISOString()
+        };
+
+        orders.push(order);
+        setOrders(orders);
+
+    });
+
+    buyBtnsubnav.addEventListener("click", () => {
+        const orders = getOrders();
+
+        const order = {
+            orderId: Date.now(),     
+            items: [{ id: book.id, title: book.title, price: book.price, qty: 1 ,author:book.author, img:book.image}],
+            total: book.price,
+            createdAt: new Date().toISOString()
+        };
+
+        orders.push(order);
+        setOrders(orders);
+    });
+
+
+    //
 
     // TOP 버튼(기존 유지)
     const toTopBtn = document.getElementById("toTopBtn");

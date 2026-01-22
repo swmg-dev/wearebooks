@@ -1,5 +1,5 @@
 :root {
-  --header-h: 64px;
+  --header-h: 110px;
   --footer-h: 120px;
 }
 
@@ -10,7 +10,7 @@ body {
 
 body {
   min-height: 100vh;
-  display: flex;
+  /* display: flex;   footer 내용 끝에 자연스럽게 위치시키기 위해 수정*/
   flex-direction: column;
 }
 
